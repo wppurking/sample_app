@@ -11,6 +11,7 @@ group :development, :test do
 end
 
 gem 'mysql2'
+gem 'thin'
 
 
 # Gems used only for assets and not required
