@@ -13,9 +13,14 @@ describe "StaticPages" do
       page.should have_selector('h1', text: 'Sample App')
     end
 
-    it "should have the right title" do
+    it "should have the base title" do
       visit '/static_pages/home'
-      page.should have_selector('title', text: "#{title_prefix} Home")
+      page.should have_selector('title', text: title_prefix[0..-2].strip)
+    end
+
+    it "should not have a custom page title" do
+      visit '/static_pages/home'
+      page.should_not have_selector('title', text: '| Home')
     end
 
   end
