@@ -19,11 +19,15 @@ describe User do
 
 	subject { @user }
 
+	# What is respond_to
+	# > A method to determine if an object responds to a message (e.g., a method call).
+
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
 	it { should respond_to(:password_digest) }
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
+	#  这个是 Model 在添加了 has_secure_password 方法以后自动添加的
 	it { should respond_to(:authenticate) }
 
 	# be_valid 是一个 Magic, 本来的代码为 @user.valid? 然后借用 rsepc 的代码 @user.should be_valid ,
