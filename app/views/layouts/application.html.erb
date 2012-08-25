@@ -10,8 +10,16 @@
 <body>
 <%= render 'layouts/header' %>
 <div class="container">
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
   <%= yield %>
   <%= render 'layouts/footer' %>
+  <!-- 这里的 Rails.env 方法是将 ENV 中的 production , developer 等包装了一下, 使用
+   Ruby 的 missing_method 进行判断 xxx? 方法, ruby 的动态特性呀~
+   你可以调用  Rails.env.xxxxx? 只要方法最后是 ? 结尾, 当 xxx 与环境字符串一样的时候就为 true
+   -->
+  <%= debug(params) if Rails.env.development? %>
 </div>
 
 </body>

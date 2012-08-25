@@ -5,19 +5,13 @@ gem 'bootstrap-sass', '2.0.0'
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '3.0.1'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-group :development, :test do
-  gem 'sqlite3'
-  gem 'rspec-rails'
-end
-
 # 这个是能够自动为 Model 生成 comment 的 jar
 gem 'annotate', '2.5.0', group: :development
 
 gem 'mysql2'
-gem 'thin'
+
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
 # Gems used only for assets and not required
@@ -34,11 +28,22 @@ end
 
 gem 'jquery-rails'
 
-group :test do
-  gem 'capybara'
-  gem 'spork'
+group :development, :test do
+  gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'thin'
 end
 
+group :test do
+  gem 'capybara'
+  gem 'spork-rails'
+  gem 'factory_girl_rails'
+end
+
+
+group :production do
+  gem 'unicorn'
+end
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

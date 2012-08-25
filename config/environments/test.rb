@@ -15,14 +15,14 @@ SampleApp::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -34,4 +34,12 @@ SampleApp::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # 在这里需要去阅读 BCrypt-ruby 的文档才会知道, 书上说这里这样会加快速度(按道理也应该是这样),
+  # 可是我从 rspec 运行测试的时间来看, 还是一样的....
+  require "bcrypt"
+  silence_warnings do
+    # 将 BCrypt 的 DEFAULT_COST 重新付值, 使用 MIN_COST 替换
+    BCrypt::Engine::DEFAULT_COST = BCrypt::Engine::MIN_COST
+  end
 end
