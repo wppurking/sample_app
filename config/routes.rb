@@ -2,9 +2,14 @@ SampleApp::Application.routes.draw do
   #get "users/new" comment this line for resource :users get work
   resources :users
 
+  # 这个是将 session 当做一个 RESTFul 的资源来使用, 但并不像 Model 需要存储到数据库
+  resources :sessions, only: [:new, :create, :destory]
+
   root :to => 'static_pages#home'
 
   match '/signup', to: 'users#new'
+  match '/signin', to: 'sessions#new'
+  match '/signout', to: 'sessions#destory', via: :delete
 
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'
