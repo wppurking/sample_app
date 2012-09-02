@@ -10,6 +10,9 @@ gem 'annotate', '2.5.0', group: :development
 
 gem 'mysql2'
 
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -32,6 +35,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
   gem 'thin'
+  gem 'faker'
 end
 
 group :test do
