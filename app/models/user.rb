@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   # 4. 会自动引入 ActiveModel::SecurePassword 模块, 并且添加上 :authenticate (方法)
   has_secure_password
 
+  has_many :microposts, dependent: :destroy
+
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
 
