@@ -8,7 +8,8 @@ gem 'bcrypt-ruby', '3.0.1'
 # 这个是能够自动为 Model 生成 comment 的 jar
 gem 'annotate', '2.5.0', group: :development
 
-gem 'mysql2'
+#gem 'mysql2'
+gem 'pg'
 
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
