@@ -23,6 +23,7 @@ describe Micropost do
 
   subject { @micropost }
 
+  # 确保有如下字段
   it { should respond_to(:content) }
   it { should respond_to(:user_id) }
 
@@ -32,5 +33,15 @@ describe Micropost do
         Micropost.new(user_id: user.id)
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
+  end
+
+  describe "when user_id is not present" do
+    before { @micropost.user_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "with content that is too long" do
+    before { @micropost.content = "a" * 150 }
+    it { should_not be_valid }
   end
 end

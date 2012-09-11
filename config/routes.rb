@@ -3,7 +3,9 @@ SampleApp::Application.routes.draw do
   resources :users
 
   # 这个是将 session 当做一个 RESTFul 的资源来使用, 但并不像 Model 需要存储到数据库
-  resources :sessions, only: [:new, :create, :destory]
+  resources :sessions, only: [:new, :create, :destroy]
+
+  resources :microposts, only: [:create, :destroy]
 
   root :to => 'static_pages#home'
 

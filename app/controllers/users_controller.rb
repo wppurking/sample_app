@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @microposts = @user.microposts.paginate(page: params[:page], per_page: 10)
   end
 
   def create
@@ -54,14 +54,6 @@ class UsersController < ApplicationController
   end
 
   private
-  def signed_in_user
-    #noinspection RubyControlFlowConversionInspection
-    if not signed_in?
-      store_location
-      redirect_to signin_url, notice: "Please sign in."
-    end
-  end
-
   def correct_user
     @user = User.find(params[:id])
     redirect_to root_path if not current_user?(@user)

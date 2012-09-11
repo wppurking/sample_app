@@ -1,5 +1,6 @@
 include ApplicationHelper
 
+# 在测试环境中使用的模拟登陆的方法
 def sign_in(user)
   visit signin_path
   fill_in "Email", with: user.email
