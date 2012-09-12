@@ -3,6 +3,7 @@ class MicropostsController < ApplicationController
   include SessionsHelper
 
   before_filter :signed_in_user, only: [:create, :destroy]
+  before_filter :correct_user, only: [:destroy]
 
   def index
   end
@@ -13,12 +14,21 @@ class MicropostsController < ApplicationController
       flash[:success] = "Micropost created!"
       redirect_to root_url
     else
-      # 如果创建错误, 不要跳转, 直接内部转向首页
+      @feed_items = [] # 需要放一个空集合, 因为在 home 页面需要使用
+                       # 如果创建错误, 不要跳转, 直接内部转向首页
       render 'static_pages/home'
     end
   end
 
   def destroy
+    @micropost.destroy
+    redirect_to root_url
+  end
+
+  private
+  def correct_user
+    @micropost = current_user.microposts.find_by_id(params[:id])
+    redirect_to root_url if @micropost.nil?
   end
 
 end

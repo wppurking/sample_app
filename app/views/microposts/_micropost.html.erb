@@ -1,6 +1,9 @@
 <li>
   <blockquote>
     <p><%= micropost.content %></p>
-    <small>Posted <%= time_ago_in_words(micropost.created_at) %></small>
+    <small>
+      Posted <%= time_ago_in_words(micropost.created_at) %>
+      <%= link_to 'delete', micropost, method: :delete, confirm: "You sure?" %>
+    </small>
   </blockquote>
 </li>
