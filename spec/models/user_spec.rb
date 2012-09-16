@@ -33,6 +33,11 @@ describe User do
   it { should respond_to(:remember_token) }
   #  这个是 Model 在添加了 has_secure_password 方法以后自动添加的
   it { should respond_to(:authenticate) }
+  it { should respond_to(:feed) }
+  it { should respond_to(:relationships) }
+  # 为 user 添加 user.followed_users 集合, 关联被我跟踪了的用户
+  it { should respond_to(:followed_users) }
+  it { should respond_to(:followers) }
 
   # be_valid 是一个 Magic, 本来的代码为 @user.valid? 然后借用 rsepc 的代码 @user.should be_valid ,
   # be_xxx 也就是调用了 @user.xxx? 方法, 注意 ?
@@ -163,5 +168,27 @@ describe User do
       its(:feed) { should_not include(unfollowed_post) }
     end
 
+  end
+
+  describe "following" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+
+    describe "and unfollowing" do
+      before { @user.unfollow!(other_user) }
+      it { should_not be_following(other_user) }
+      its(:followed_users) { should_not include(other_user) }
+    end
+
+    describe "followed user" do
+      subject { other_user }
+      its(:followers) { should include(@user) }
+    end
   end
 end
