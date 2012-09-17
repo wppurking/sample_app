@@ -53,7 +53,15 @@ class User < ActiveRecord::Base
 
   # 不太理解, 为什么在 sample_app 中会需要使用一个 revers_relationships, 直接使用 relationships 也完成了
   # 这个功能啊? 并且 revers_relationships 也没有在其他任何地方使用到
-  has_many :followers, through: :relationships
+  #has_many :followers, through: :relationships
+  # 从 followers 与 followed_users 的例子可以看出, 对于 多对多 关联, 需要使用 Join Table 的时候,
+  # 所有关系都记录在了中间表中, 需要通过一个 has_many :name, through: :foreignKey 来告诉 Rails 这个 :name
+  # 需要需要通过中间表来获取关系, 而具体的关系则是外键, 而外键则需要通过另外一个 has_many 来指定.
+  # 将 users 与 followed_users 想象成为两个表, 那么中间的 relationships 表则建立了这两个表的关系, 而在 relationships
+  # 表中, follower_id 为 users 的外键, 在 relationships 中可以通过 follower_id 找到 users 中的用户, 而 followed_id
+  # 为 followed_user 的外键, 在 relationships 中通过 followed_id 来找到 followed_users 中的用户, 那么明显, 这是两个
+  # 不一样的外键, 所以需要分别设置自己的外键, 然后让 has_many :name, through 使用正确的外键关系去寻找关联
+  has_many :followers, through: :revers_relationships
   has_many :revers_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
 
   before_save { |user| user.email = email.downcase }
