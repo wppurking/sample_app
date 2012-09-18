@@ -53,6 +53,12 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  # 这个是通过 user/1/following 访问进来的
+  # 这种嵌套访问属于在 routes.rb 中 resources 的 member 使用(如果是集合则 collection)
+  def following
+    puts "lllllllllllllllllllllllllll"
+  end
+
   private
   def correct_user
     @user = User.find(params[:id])

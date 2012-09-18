@@ -1,6 +1,10 @@
 SampleApp::Application.routes.draw do
   #get "users/new" comment this line for resource :users get work
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
 
   # 这个是将 session 当做一个 RESTFul 的资源来使用, 但并不像 Model 需要存储到数据库
   resources :sessions, only: [:new, :create, :destroy]
