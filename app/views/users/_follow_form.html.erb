@@ -1,0 +1,10 @@
+<!-- 仅仅根据 @user 的 follow 状态用来判断使用哪一份 partials -->
+<% if not current_user?(@user) %>
+  <div id="follow_form">
+    <% if current_user.following?(@user) %>
+      <%= render 'unfollow' %>
+    <% else %>
+      <%= render 'follow' %>
+    <% end %>
+  </div>
+<% end %>

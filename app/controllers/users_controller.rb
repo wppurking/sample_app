@@ -56,7 +56,17 @@ class UsersController < ApplicationController
   # 这个是通过 user/1/following 访问进来的
   # 这种嵌套访问属于在 routes.rb 中 resources 的 member 使用(如果是集合则 collection)
   def following
-    puts "lllllllllllllllllllllllllll"
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render "show_follow"
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page], per_page: 10)
+    render "show_follow"
   end
 
   private

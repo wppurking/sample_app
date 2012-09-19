@@ -4,6 +4,7 @@ describe "StaticPages" do
 
   # title 前缀
   title_prefix = "Ruby on Rails Tutorial Sample App |"
+  subject { page }
 
   describe 'Home page' do
     before { visit root_path }
@@ -42,10 +43,8 @@ describe "StaticPages" do
         before do
           other_user.follow!(user)
           visit root_path
-          puts page.body
         end
 
-        # TODO 这里没有通过测试, 为什么? 哪里错了?
         it { should have_link("0 following", href: following_user_path(user)) }
         it { should have_link("1 followers", href: followers_user_path(user)) }
       end
