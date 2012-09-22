@@ -18,4 +18,12 @@ class Micropost < ActiveRecord::Base
   validates :content, presence: true, length: {maximum: 140}
 
   default_scope order: 'microposts.created_at DESC'
+
+  def self.from_users_followed_by(user)
+    # 使用 SQL 来修改一下这条语句,避免将所有 id 加载到内存中来
+    # followed_user_ids = user.followed_user_ids
+    # where("user_id IN (?)", followed_user_ids << user.id)
+    followed_user_ids = "SELECT followed_id FROM relationships WHERE follower_id=:user_id"
+    where("user_id IN (#{followed_user_ids}) OR user_id=:user_id", user_id: user.id)
+  end
 end

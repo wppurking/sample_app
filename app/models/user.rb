@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
 
 
   def feed
-    Micropost.where("user_id=?", id)
+    Micropost.from_users_followed_by(self)
   end
 
   # 是否跟踪了某一个人
